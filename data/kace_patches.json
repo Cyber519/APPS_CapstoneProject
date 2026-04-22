@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-03-17T20:00:00Z",
+  "patches": [
+    {
+      "patch_id": "KB5005565",
+      "title": "Security Update for Windows Server",
+      "severity": "Critical",
+      "reboot_required": true,
+      "supersedes": [],
+      "cve_ids": ["CVE-2024-12345"]
+    },
+    {
+      "patch_id": "KB5012170",
+      "title": "Cumulative Update for Windows",
+      "severity": "High",
+      "reboot_required": false,
+      "supersedes": ["KB5005565"],
+      "cve_ids": ["CVE-2024-54321"]
+    },
+    {
+      "patch_id": "KB5006670",
+      "title": "Update for Windows Defender",
+      "severity": "Medium",
+      "reboot_required": true,
+      "supersedes": [],
+      "cve_ids": ["CVE-2023-98765"]
+    },
+    {
+      "patch_id": "KB5018410",
+      "title": "Security Update for Windows 11",
+      "severity": "High",
+      "reboot_required": true,
+      "supersedes": [],
+      "cve_ids": ["CVE-2024-11111"]
+    },
+    {
+      "patch_id": "KB5021234",
+      "title": "Patch for Windows Server 2022",
+      "severity": "Critical",
+      "reboot_required": true,
+      "supersedes": ["KB5018410"],
+      "cve_ids": ["CVE-2024-22222"]
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-03-17T20:00:00Z",
+  "vulnerabilities": [
+    {
+      "id": "VULN-001",
+      "cve": "CVE-2024-12345",
+      "severity": "Critical",
+      "cvss": 9.8,
+      "description": "Remote code execution vulnerability in core Windows networking components.",
+      "affected_products": [
+        "Windows Server 2019",
+        "Windows 10 Pro"
+      ]
+    },
+    {
+      "id": "VULN-002",
+      "cve": "CVE-2024-54321",
+      "severity": "High",
+      "cvss": 7.5,
+      "description": "Privilege escalation vulnerability allowing unauthorized access to system processes.",
+      "affected_products": [
+        "Windows Server 2022",
+        "Windows 11"
+      ]
+    },
+    {
+      "id": "VULN-003",
+      "cve": "CVE-2023-98765",
+      "severity": "Medium",
+      "cvss": 5.4,
+      "description": "Information disclosure vulnerability in Windows kernel memory handling.",
+      "affected_products": [
+        "Windows 10 Pro"
+      ]
+    },
+    {
+      "id": "VULN-004",
+      "cve": "CVE-2024-11111",
+      "severity": "High",
+      "cvss": 8.2,
+      "description": "Buffer overflow in Windows Defender allowing arbitrary code execution.",
+      "affected_products": [
+        "Windows 10",
+        "Windows 11",
+        "Windows Server 2019"
+      ]
+    },
+    {
+      "id": "VULN-005",
+      "cve": "CVE-2024-22222",
+      "severity": "Low",
+      "cvss": 3.1,
+      "description": "Minor information leak in Windows Update service.",
+      "affected_products": [
+        "Windows 10"
+      ]
+    }
+  ]
+}

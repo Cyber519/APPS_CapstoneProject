@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Information Security Risk Dashboard (APPS)</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/app.js"></script>
+</head>
+<body class="dashboard-page">
+<div class="dashboard-shell">
+    <header class="dashboard-header">
+        <div>
+            <p class="dashboard-label">Information Security</p>
+            <h1>Risk Dashboard</h1>
+        </div>
+        <div class="dashboard-actions">
+            <button id="ingestBtn" onclick="runIngest()">Ingest Data</button>
+            <button id="scoreBtn" onclick="runScoring()">Run Scoring</button>
+            <button onclick="location.href='/priorities'">View Priorities</button>
+        </div>
+    </header>
+
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p id="loadingText">Processing...</p>
+    </div>
+
+    <section class="dashboard-metrics">
+        <div class="metric-card">
+            <p>% Risks</p>
+            <h2>{{ active_risk_percent }}%</h2>
+            <span>{{ active_vulns }} active of {{ total_vulns }}</span>
+        </div>
+        <div class="metric-card">
+            <p>Open Findings</p>
+            <h2>{{ active_vulns }}</h2>
+            <span>Remaining remediation items</span>
+        </div>
+        <div class="metric-card">
+            <p>Risk Analysis Progress</p>
+            <h2>{{ remediation_percent }}%</h2>
+            <span>{{ remediated }} remediated</span>
+        </div>
+        <div class="metric-card">
+            <p>Response Progress</p>
+            <h2>{{ response_percent }}%</h2>
+            <span>{{ deployed }} deployments complete</span>
+        </div>
+    </section>
+
+    <section class="dashboard-content">
+        <div class="dashboard-panel dashboard-chart">
+            <div class="panel-header">
+                <h3>Risk Rating Breakdown</h3>
+            </div>
+            <div class="risk-breakdown">
+                <div class="risk-item">
+                    <span class="risk-label">Critical</span>
+                    <strong>{{ priority_critical }}</strong>
+                </div>
+                <div class="risk-item">
+                    <span class="risk-label">High</span>
+                    <strong>{{ priority_high }}</strong>
+                </div>
+                <div class="risk-item">
+                    <span class="risk-label">Medium</span>
+                    <strong>{{ priority_medium }}</strong>
+                </div>
+                <div class="risk-item">
+                    <span class="risk-label">Low</span>
+                    <strong>{{ priority_low }}</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-panel dashboard-progress">
+            <div class="panel-header">
+                <h3>Response Progress for Risks</h3>
+            </div>
+            <div class="progress-track">
+                <div>
+                    <span>Remediated</span>
+                    <strong>{{ remediated }}</strong>
+                </div>
+                <div class="progress-bar-wrapper">
+                    <div class="progress-track-line">
+                        <div class="progress-track-fill" data-fill="{{ remediation_percent }}"></div>
+                    </div>
+                    <span>{{ remediation_percent }}%</span>
+                </div>
+            </div>
+            <div class="progress-track">
+                <div>
+                    <span>Completed Deployments</span>
+                    <strong>{{ deployed }}</strong>
+                </div>
+                <div class="progress-bar-wrapper">
+                    <div class="progress-track-line">
+                        <div class="progress-track-fill completed" data-fill="{{ response_percent }}"></div>
+                    </div>
+                    <span>{{ response_percent }}%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <nav class="dashboard-nav">
+        <a href="/vulnerabilities" class="nav-button">Vulnerabilities</a>
+        <a href="/devices" class="nav-button">Devices</a>
+        <a href="/patches" class="nav-button">Patches</a>
+        <a href="/priorities" class="nav-button">Priorities</a>
+    </nav>
+</div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patch Prioritization</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/app.js"></script>
+</head>
+<body>
+<h1>Patch Prioritization</h1>
+<div id="toast" class="toast"></div>
+
+<table>
+    <tr>
+        <th>Score</th>
+        <th>Priority</th>
+        <th>Device ID</th>
+        <th>Vulnerability ID</th>
+        <th>Patch ID</th>
+        <th>Hostname</th>
+        <th>CVE ID</th>
+        <th>Severity</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    {% for p in priorities %}
+    <tr class="{% if p.action_status == 'Completed' %}deployed-row{% endif %}">
+        <td>{{ p.score_value | round(1) }}</td>
+        <td><span class="priority {{ p.priority | lower }}">{{ p.priority }}</span></td>
+        <td>{{ p.device_id }}</td>
+        <td>{{ p.vulnerability_id }}</td>
+        <td>{{ p.patch_id }}</td>
+        <td>{{ p.hostname }}</td>
+        <td>{{ p.cve_id }}</td>
+        <td>{{ p.severity }}</td>
+        <td><span class="status {{ p.action_status | lower }}">{{ p.action_status }}</span></td>
+        <td>
+            <div class="deploy-cell">
+                {% if p.action_status == 'Completed' %}
+                    <button class="deployed-button" disabled>Patched</button>
+                {% else %}
+                    <button onclick="deploy(this, '{{ p.score_id }}')">Simulate Deploy</button>
+                    <div class="progress-bar"><div class="progress-fill"></div></div>
+                {% endif %}
+            </div>
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan="10">No priorities found. Please ingest data and run scoring first.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a href="/dashboard">Back to Dashboard</a>
+</body>
+</html>

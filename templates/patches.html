@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patch Inventory</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<h1>Patch Inventory</h1>
+
+<table>
+    <tr>
+        <th>Patch ID</th>
+        <th>Title</th>
+        <th>Severity</th>
+        <th>Reboot Required</th>
+    </tr>
+    {% for p in patches %}
+    <tr>
+        <td>{{ p.patch_id }}</td>
+        <td>{{ p.title }}</td>
+        <td>{{ p.severity }}</td>
+        <td>{{ p.reboot_required }}</td>
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan="4">No patches found. Please ingest data first.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a href="/dashboard">Back to Dashboard</a>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{
+  "generated_at": "2026-03-17T20:00:00Z",
+  "devices": [
+    {
+      "device_id": "DEV-001",
+      "hostname": "WIN-SERVER01",
+      "criticality": "High",
+      "os": "Windows Server 2019",
+      "installed_patches": [
+        "KB5005565",
+        "KB5012170"
+      ]
+    },
+    {
+      "device_id": "DEV-002",
+      "hostname": "LAPTOP-1234",
+      "os": "Windows 10 Pro",
+      "criticality": "Medium",
+      "installed_patches": [
+        "KB5006670"
+      ]
+    },
+    {
+      "device_id": "DEV-003",
+      "hostname": "DB-SERVER02",
+      "os": "Windows Server 2022",
+      "criticality": "High",
+      "installed_patches": [
+        "KB5018410",
+        "KB5021234"
+      ]
+    },
+    {
+      "device_id": "DEV-004",
+      "hostname": "WORKSTATION-5678",
+      "os": "Windows 11",
+      "criticality": "Low",
+      "installed_patches": [
+        "KB5018410"
+      ]
+    },
+    {
+      "device_id": "DEV-005",
+      "hostname": "FILE-SERVER03",
+      "os": "Windows Server 2019",
+      "criticality": "High",
+      "installed_patches": [
+        "KB5005565"
+      ]
+    }
+  ]
+}
