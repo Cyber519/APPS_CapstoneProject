@@ -142,3 +142,13 @@
   - Any missing or malformed mock data is reported appropriately.
 - Pass/Fail: Pass
 - Notes: Repeated ingestion returns 200 and data is reloaded cleanly. Explicit malformed/mock-data error handling is not present in the current implementation.
+
+## Overall System Flow Validation
+- Overall Expected Result:
+  - The system follows the logical flow described in the design:
+    “Simulated Defender feed → Ingestion Layer → Normalized Tables → Scoring Engine → Priority Scores → Deployment Orchestrator → Simulated Patch Actions → Dashboard & Reports.”
+- Pass/Fail: Partially Pass
+- Issues/Defects:
+  - The scoring formula implemented in code differs from the test case expected formula.
+  - Vulnerability detail modal and export CSV/PDF are not implemented.
+  - Animated score progression from 0 to final score is not present in the current UI.

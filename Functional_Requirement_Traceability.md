@@ -36,3 +36,14 @@ This document maps each functional requirement (FR) to the corresponding test ca
 - FR-10: Verified. Login and dashboard pages are accessible.
 - FR-11: Verified. Core backend API endpoints respond successfully.
 - FR-12: Verified. Repeat ingestion is handled cleanly; malformed/mock data error handling is not implemented.
+
+## Overall System Flow Validation
+
+- Overall Expected Result:
+  - The system follows the logical flow described in the design:
+    “Simulated Defender feed → Ingestion Layer → Normalized Tables → Scoring Engine → Priority Scores → Deployment Orchestrator → Simulated Patch Actions → Dashboard & Reports.”
+- Pass/Fail: Partially Pass
+- Issues/Defects:
+  - The scoring formula implemented in code differs from the test case expected formula.
+  - Vulnerability detail modal and export CSV/PDF are not implemented.
+  - Animated score progression from 0 to final score is not present in the current UI.
