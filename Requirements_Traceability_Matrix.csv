@@ -1,16 +1,16 @@
-Project Name:, 
-Project Description:, 
-
-ID,Functional Requirement Use Case ID,Architectural/Design Document,Software Module(s),Test Case ID,Additional Comments
-001,FR-1,Section 2.0,priorities_api.py / templates/priorities.html,TC03,View a sortable table of patches with priority scores
-002,FR-2,Section 2.0,templates/priorities.html,TC03,Filter patches by CVSS score, asset type, and compliance tag
-003,FR-3,Section 2.0,templates/priorities.html,TC05,View detailed threat and asset information for a selected patch
-004,FR-4,Section 2.0,static/app.js / templates/priorities.html,TC06,Export dashboard view as PDF/CSV for audit purposes
-005,FR-5,Section 2.0,templates/priorities.html,TC03,Visual indicators for patch urgency (Critical/High/Medium)
-006,FR-6,Section 2.0,templates/dashboard.html / static/app.js,TC07,Animated scoring feedback in the UI
-007,FR-7,Section 2.0,services/ingestion_service.py / api/defender_api.py / api/kace_api.py,TC01,Load mock data from JSON (Defender, KACE devices, KACE patches)
-008,FR-8,Section 2.0,api/priorities_api.py / services/scoring_service.py,TC08,Simulate patch deployment and update deployment status/metrics
-009,FR-9,Section 2.0,templates/vulnerabilities.html / templates/devices.html / templates/patches.html,TC09,Display vulnerabilities, devices, and patches inventory pages
-010,FR-10,Section 2.0,templates/login.html / templates/dashboard.html,TC10,Provide login/page access and navigation to dashboard
-011,FR-11,Section 2.0,api/defender_api.py / api/priorities_api.py / api/kace_api.py / services/scoring_service.py,TC11,Support backend API endpoints for ingest, scoring, priorities, and deploy
-012,FR-12,Section 2.0,api/defender_api.py / database/db.py,TC12,Gracefully handle repeated ingestion and missing/mock data errors
+Project Name:, ,,,,,,,
+Project Description:, ,,,,,,,
+,,,,,,,,
+ID,Functional Requirement Use Case ID,Architectural/Design Document,Software Module(s),Test Case ID,Additional Comments,,,
+1,FR-1,Section 2.0,priorities_api.py / templates/priorities.html,TC03,View a sortable table of patches with priority scores,,,
+2,FR-2,Section 2.0,templates/priorities.html,TC03,Filter patches by CVSS score, asset type, and compliance tag,
+3,FR-3,Section 2.0,templates/priorities.html,TC05,View detailed threat and asset information for a selected patch,,,
+4,FR-4,Section 2.0,static/app.js / templates/priorities.html,TC06,Export dashboard view as PDF/CSV for audit purposes,,,
+5,FR-5,Section 2.0,templates/priorities.html,TC03,Visual indicators for patch urgency (Critical/High/Medium),,,
+6,FR-6,Section 2.0,templates/dashboard.html / static/app.js,TC07,Animated scoring feedback in the UI,,,
+7,FR-7,Section 2.0,services/ingestion_service.py / api/defender_api.py / api/kace_api.py,TC01,Load mock data from JSON (Defender, KACE devices, KACE patches),
+8,FR-8,Section 2.0,api/priorities_api.py / services/scoring_service.py,TC08,Simulate patch deployment and update deployment status/metrics,,,
+9,FR-9,Section 2.0,templates/vulnerabilities.html / templates/devices.html / templates/patches.html,TC09,Display vulnerabilities, devices, and patches inventory pages,
+10,FR-10,Section 2.0,templates/login.html / templates/dashboard.html,TC10,Provide login/page access and navigation to dashboard,,,
+11,FR-11,Section 2.0,api/defender_api.py / api/priorities_api.py / api/kace_api.py / services/scoring_service.py,TC11,Support backend API endpoints for ingest, scoring, priorities, and deploy
+12,FR-12,Section 2.0,api/defender_api.py / database/db.py,TC12,Gracefully handle repeated ingestion and missing/mock data errors,,,

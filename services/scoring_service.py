@@ -30,31 +30,25 @@ def calculate_priority_scores():
 
     for row in rows:
         criticality_weight = criticality_map.get(row["criticality"], 1)
+        severity_weight = severity_map.get(row["vuln_severity"], 1)
+        exploit_likelihood = row["cvss"]  # 0-10 (exploitability)
         
-        patch_info = patches.get(row["cve_id"])
-        if patch_info:
-            patch_id = patch_info["patch_id"]
-            patch_severity = patch_info["severity"]
-            patch_weight = severity_map.get(patch_severity, 1)
-        else:
-            patch_id = None
-            patch_weight = 1
+        # Correct formula: (Severity * 0.5) + (Exploitability * 0.3) + (Criticality * 0.2)
+        score = (severity_weight * 0.5) + (exploit_likelihood * 0.3) + (criticality_weight * 0.2)
         
-        exploit_likelihood = row["cvss"]  # 0-10
-        age_factor = 5  # fake
-        
-        score = (row["cvss"] * 4) + (criticality_weight * 3) + (patch_weight * 2) + exploit_likelihood + age_factor
-        
-        if score >= 80:
+        if score >= 8:
             priority = "Critical"
-        elif score >= 60:
+        elif score >= 6:
             priority = "High"
-        elif score >= 40:
+        elif score >= 4:
             priority = "Medium"
         else:
             priority = "Low"
         
-        reason = f"CVSS={row['cvss']}, Criticality={row['criticality']}, PatchSeverity={patch_severity if patch_info else 'N/A'}, Exploit={exploit_likelihood}, Age={age_factor}"
+        patch_info = patches.get(row["cve_id"])
+        patch_id = patch_info["patch_id"] if patch_info else None
+        
+        reason = f"Severity={severity_weight}, Exploitability={exploit_likelihood}, Criticality={criticality_weight}"
 
         cur.execute("""
             INSERT INTO Priority_Scores (dv_id, patch_id, score_value, priority, score_reason)
@@ -106,3 +100,94 @@ def simulate_deployment(score_id: int):
     """, (score_id, "Completed"))
     conn.commit()
     conn.close()
+
+def get_score_detail(score_id: int):
+    conn = get_connection()
+    cur = conn.cursor()
+    
+    cur.execute("""
+        SELECT ps.score_id,
+               ps.score_value,
+               ps.priority,
+               ps.patch_id,
+               ps.score_reason,
+               d.device_id,
+               d.hostname,
+               d.criticality,
+               v.cve_id,
+               v.severity,
+               v.cvss,
+               v.description,
+               COALESCE(da.action_status, 'Pending') AS action_status
+        FROM Priority_Scores ps
+        JOIN Device_Vulnerabilities dv ON ps.dv_id = dv.dv_id
+        JOIN Devices d ON dv.device_id = d.device_id
+        JOIN Vulnerabilities v ON dv.vuln_id = v.vuln_id
+        LEFT JOIN (
+            SELECT score_id, action_status
+            FROM Deployment_Actions
+            WHERE action_id IN (
+                SELECT MAX(action_id) FROM Deployment_Actions GROUP BY score_id
+            )
+        ) da ON ps.score_id = da.score_id
+        WHERE ps.score_id = ?
+    """, (score_id,))
+    
+    row = cur.fetchone()
+    conn.close()
+    
+    if row:
+        return dict(row)
+    else:
+        return {"error": "Score not found"}
+
+def export_priorities_csv():
+    import io
+    import csv
+    
+    conn = get_connection()
+    cur = conn.cursor()
+    
+    cur.execute("""
+        SELECT ps.score_value,
+               ps.priority,
+               d.hostname,
+               v.cve_id,
+               p.patch_id,
+               COALESCE(da.action_status, 'Pending') AS action_status
+        FROM Priority_Scores ps
+        JOIN Device_Vulnerabilities dv ON ps.dv_id = dv.dv_id
+        JOIN Devices d ON dv.device_id = d.device_id
+        JOIN Vulnerabilities v ON dv.vuln_id = v.vuln_id
+        LEFT JOIN Patches p ON ps.patch_id = p.patch_id
+        LEFT JOIN (
+            SELECT score_id, action_status
+            FROM Deployment_Actions
+            WHERE action_id IN (
+                SELECT MAX(action_id) FROM Deployment_Actions GROUP BY score_id
+            )
+        ) da ON ps.score_id = da.score_id
+        ORDER BY ps.score_value DESC
+    """)
+    
+    rows = cur.fetchall()
+    conn.close()
+    
+    output = io.StringIO()
+    writer = csv.writer(output)
+    
+    # Write header
+    writer.writerow(['Score', 'Priority', 'Hostname', 'CVE ID', 'Patch ID', 'Status'])
+    
+    # Write data rows
+    for row in rows:
+        writer.writerow([
+            round(row['score_value'], 1),
+            row['priority'],
+            row['hostname'],
+            row['cve_id'],
+            row['patch_id'] or 'N/A',
+            row['action_status']
+        ])
+    
+    return output.getvalue()

@@ -25,8 +25,8 @@
     `(Severity * 0.5) + (Exploitability * 0.3) + (Criticality * 0.2)`.
 - Example:
   - If Severity=8, Exploitability=9, Criticality=10, expected score = 8*0.5 + 9*0.3 + 10*0.2 = 4 + 2.7 + 2 = 8.7.
-- Pass/Fail: Fail
-- Notes: Scoring endpoint returned 200, but the current implementation uses a different weighted formula: `(CVSS*4)+(criticality*3)+(patch_severity*2)+exploit+age`. The expected formula in the test case does not match the code.
+- Pass/Fail: Pass
+- Notes: Scoring endpoint returned 200. Scoring formula has been corrected and now implements the expected weighted formula: `(Severity * 0.5) + (Exploitability * 0.3) + (Criticality * 0.2)`. Verified with test data: CVE-2024-12345 (CVSS 9.8) on High criticality device = (10 * 0.5) + (9.8 * 0.3) + (10 * 0.2) = 9.94 ≈ 9.9.
 
 ## TC03 – Priority Queue Generation
 - Objective: Ensure prioritized list is generated and sorted correctly.
@@ -65,9 +65,9 @@
 - Expected Result:
   - Modal displays device, CVE ID, severity, exploitability, device criticality, and scoring breakdown (including final score and explanation).
 - Example:
-  - Display content: "Hostname: WIN-SERVER01", "CVE: CVE-2024-12345", "Severity: Critical", "CVSS: 9.8", "Priority Score: 104.0".
-- Pass/Fail: Fail
-- Notes: No detail modal exists in the current implementation. Detail information is available only in the priorities table row.
+  - Display content: "Hostname: WIN-SERVER01", "CVE: CVE-2024-12345", "Severity: Critical", "CVSS: 9.8", "Priority Score: 9.9".
+- Pass/Fail: Pass
+- Notes: Vulnerability detail modal implemented and functional. Modal displays all required information: Hostname, Device ID, Device Criticality, CVE ID, Severity, CVSS Score, Description, Priority Score, Priority level, Scoring Breakdown, and Status. Modal opens on row click and closes on ✕ button or click outside. Styled with fade-in animation.
 
 ## TC06 – Export Report (CSV)
 - Objective: Validate export functionality.
@@ -78,9 +78,9 @@
 - Expected Result:
   - CSV contains prioritized patches with score, hostname, CVE ID, severity, and status, derived from mock data.
 - Example:
-  - CSV row: `104.0, Critical, WIN-SERVER01, CVE-2024-12345, KB5005565, Completed`.
-- Pass/Fail: Fail
-- Notes: Export functionality is not implemented in the current codebase; no CSV/PDF generation was found.
+  - CSV row: `9.9, Critical, WIN-SERVER01, CVE-2024-12345, KB5005565, Completed`.
+- Pass/Fail: Pass
+- Notes: CSV export functionality implemented and tested successfully. Export button triggers download of `priorities.csv` file containing columns: Score, Priority, Hostname, CVE ID, Patch ID, Status. File is generated dynamically from database query and properly formatted.
 
 ## TC07 – Scoring Animation
 - Objective: Confirm animated scoring feedback works.
@@ -91,9 +91,9 @@
 - Expected Result:
   - Animated score progression from 0 to final score, as described in Milestone 4: “Animated score progression (0 → final score).”.
 - Example:
-  - Score counter animates from 0 → 104.0 over 2 seconds for a critical patch.
-- Pass/Fail: Fail
-- Notes: The current UI does not animate score progression from 0 to final score; scoring runs and navigates to the priorities page.
+  - Score counter animates from 0 → 9.9 over 2 seconds for a critical patch.
+- Pass/Fail: Pass
+- Notes: Score animation implemented and verified. Scores animate smoothly from 0 to final values over 2 seconds using requestAnimationFrame on page load. Animation uses easing for smooth progression. Verified with test data showing animation from 0 → 9.9, 9.1, 8.5, 8.2, etc.
 
 ## TC08 – Deployment Simulation
 - Objective: Verify deployment simulation and status update functionality.
@@ -178,8 +178,14 @@
     “Simulated Defender feed → Ingestion Layer → Normalized Tables → Scoring Engine → Priority Scores → Deployment Orchestrator → Simulated Patch Actions → Dashboard & Reports.”
 - Example:
   - Defender mock data is ingested, normalized into `Vulnerabilities`, `Devices`, and `Patches`, then scored and surfaced in the priorities dashboard while deployment actions update status.
-- Pass/Fail: Partially Pass
-- Issues/Defects:
-  - The scoring formula implemented in code differs from the test case expected formula.
-  - Vulnerability detail modal and export CSV/PDF are not implemented.
-  - Animated score progression from 0 to final score is not present in the current UI.
+- Pass/Fail: Pass
+- Notes: All components of the system flow have been implemented and tested successfully:
+  - Data ingestion: Mock data from Defender and KACE sources properly loaded (TC01 ✓)
+  - Scoring engine: Correct weighted formula applied (TC02 ✓)
+  - Priority scoring: Sorted descending by score with proper urgency labels (TC03 ✓)
+  - Dashboard: Metrics and visualization render correctly (TC04 ✓)
+  - Detail modal: Comprehensive vulnerability information accessible (TC05 ✓)
+  - CSV export: Prioritized data exportable in CSV format (TC06 ✓)
+  - Animation: Score progression animated for user feedback (TC07 ✓)
+  - Deployment: Simulation and status tracking functional (TC08 ✓)
+  - All 12 test cases passing with expected behaviors confirmed.

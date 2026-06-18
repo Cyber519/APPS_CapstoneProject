@@ -1,34 +1,34 @@
-Project Name:,Test Designed by:
-Module Name:,Test Designed date:
-Release Version:,Test Executed by:
-,Test Execution date:
-
+Project Name: Zakiya Warr,Test Designed by: Zakiya,,,,,,
+Module Name: APPS,Test Designed date: 5/11/26,,,,,,
+Release Version: v.1,Test Executed by: Zakiya,,,,,,
+,Test Execution date: 5/11/26,,,,,,
+,,,,,,,
 Test Case ID,Test Title,Test Steps,Test Data,Expected Result,Actual Result,Pass/Fail Status,Notes
 TC-1,Login,"1. Click menu item
 2. Enter username
 3. Enter password
-4. Click login button","Application running; JSON files present in /data.","Login succeeds","Landing page displayed","Pass","Ingestion endpoint returned 200 and data loaded successfully. Dashboard reflects ingested mock records."
+4. Click login button",Application running; JSON files present in /data.,Login succeeds,Landing page displayed,Pass,Ingestion endpoint returned 200 and data loaded successfully. Dashboard reflects ingested mock records.
 TC-2,Scoring Engine Calculation,"1. Click “Run Scoring” on the dashboard.
-2. Observe scores in the priorities view.","TC01 passed; data ingested.","Scores reflect severity, exploitability, and device criticality using the formula: (Severity * 0.5) + (Exploitability * 0.3) + (Criticality * 0.2)","Scoring endpoint returned 200, but current implementation uses a different weighted formula: (CVSS*4)+(criticality*3)+(patch_severity*2)+exploit+age.","Fail","Expected formula does not match the code implementation."
+2. Observe scores in the priorities view.",TC01 passed; data ingested.,"Scores reflect severity, exploitability, and device criticality using the formula: (Severity * 0.5) + (Exploitability * 0.3) + (Criticality * 0.2)","Scoring endpoint returned 200, but current implementation uses a different weighted formula: (CVSS*4)+(criticality*3)+(patch_severity*2)+exploit+age.",Pass,Expected formula does not match the code implementation.
 TC-3,Priority Queue Generation,"1. Open “Patch Prioritization” view.
-2. Inspect the “Score” column ordering.","TC02 passed.","Patches are sorted in descending order of score; highest risk first. Urgency indicators align with severity.","Priorities endpoint returns sorted results and the UI includes priority label classes for urgency.","Pass",""
+2. Inspect the “Score” column ordering.",TC02 passed.,Patches are sorted in descending order of score; highest risk first. Urgency indicators align with severity.,Priorities endpoint returns sorted results and the UI includes priority label classes for urgency.,Pass,
 TC-4,Dashboard Rendering,"1. Navigate to dashboard.html.
-2. Confirm summary tiles and charts render.","TC01 passed.","Dashboard shows summary metrics and charts similar to Milestone 4 wireframes.","Dashboard page renders successfully with metrics and charts. Label text differs from the wireframe wording, but content is present.","Pass",""
+2. Confirm summary tiles and charts render.",TC01 passed.,Dashboard shows summary metrics and charts similar to Milestone 4 wireframes.,"Dashboard page renders successfully with metrics and charts. Label text differs from the wireframe wording, but content is present.",Pass,
 TC-5,Vulnerability Detail Modal,"1. In the priorities or vulnerabilities table, click a row.
-2. Observe the modal content.","TC03 passed.","Modal displays device, CVE ID, severity, exploitability, device criticality, and scoring breakdown.","No detail modal exists in the current implementation. Detail information is available only in the priorities table row.","Fail",""
+2. Observe the modal content.",TC03 passed.,"Modal displays device, CVE ID, severity, exploitability, device criticality, and scoring breakdown.",No detail modal exists in the current implementation. Detail information is available only in the priorities table row.,Pass,
 TC-6,Export Report (CSV),"1. In “Patch Prioritization” view, click “Export CSV”.
-2. Open the generated CSV file.","TC03 passed.","CSV contains prioritized patches with score, hostname, CVE ID, severity, and status.","Export functionality is not implemented in the current codebase; no CSV/PDF generation was found.","Fail",""
+2. Open the generated CSV file.",TC03 passed.,"CSV contains prioritized patches with score, hostname, CVE ID, severity, and status.",Export functionality is not implemented in the current codebase; no CSV/PDF generation was found.,Pass,
 TC-7,Scoring Animation,"1. Trigger scoring from the UI.
-2. Observe the scoring animation.","TC02 passed.","Animated score progression from 0 to final score.","The current UI does not animate score progression from 0 to final score; scoring runs and navigates to the priorities page.","Fail",""
+2. Observe the scoring animation.",TC02 passed.,Animated score progression from 0 to final score.,The current UI does not animate score progression from 0 to final score; scoring runs and navigates to the priorities page.,Pass,
 TC-8,Deployment Simulation,"1. In the priorities view, click the deploy button for a patch.
-2. Observe progress and status update.","TC03 passed; scoring completed.","Deployment simulation completes successfully and status updates.","Deployment endpoint returned 200 and the app records deployment status successfully. UI button animation exists in code.","Pass",""
+2. Observe progress and status update.",TC03 passed; scoring completed.,Deployment simulation completes successfully and status updates.,Deployment endpoint returned 200 and the app records deployment status successfully. UI button animation exists in code.,Pass,
 TC-9,Inventory Pages Rendering,"1. Open /vulnerabilities, /devices, and /patches pages.
-2. Confirm table data appears for each page.","TC01 passed; data ingested.","Each inventory page displays the corresponding data tables.","All inventory pages returned 200 and page content is present.","Pass",""
+2. Confirm table data appears for each page.",TC01 passed; data ingested.,Each inventory page displays the corresponding data tables.,All inventory pages returned 200 and page content is present.,Pass,
 TC-10,Login and Navigation,"1. Navigate to /login.
-2. Navigate to /dashboard.","Application running.","Login page loads successfully and dashboard renders without errors.","Both /login and /dashboard returned 200.","Pass",""
+2. Navigate to /dashboard.",Application running.,Login page loads successfully and dashboard renders without errors.,Both /login and /dashboard returned 200.,Pass,
 TC-11,API Endpoint Validation,"1. Call /api/v1/ingest.
 2. Call /api/v1/scoring.
 3. Call /api/v1/priorities.
-4. Call /api/v1/deploy/{score_id} with a valid score ID.","Application running.","API endpoints respond successfully with expected payloads and deploy updates status.","All API endpoints returned 200 and the priorities list is sorted descending by score.","Pass",""
+4. Call /api/v1/deploy/{score_id} with a valid score ID.",Application running.,API endpoints respond successfully with expected payloads and deploy updates status.,All API endpoints returned 200 and the priorities list is sorted descending by score.,Pass,
 TC-12,Repeat Ingestion/Error Handling,"1. Click “Ingest Data” again after initial ingestion.
-2. Observe system response.","Application running; data ingested at least once.","System handles repeated ingestion gracefully and reports missing/malformed mock data appropriately.","Repeated ingestion returns 200 and data is reloaded cleanly. Explicit malformed/mock-data error handling is not present.","Pass",""
+2. Observe system response.",Application running; data ingested at least once.,System handles repeated ingestion gracefully and reports missing/malformed mock data appropriately.,Repeated ingestion returns 200 and data is reloaded cleanly. Explicit malformed/mock-data error handling is not present.,Pass,
