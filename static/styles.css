@@ -383,6 +383,22 @@ body.dashboard-page {
     color: #fff;
 }
 
+/* Stronger, darker style for the audit action to improve visibility */
+.nav-button.audit-button {
+    /* Dark blue high-contrast button for light backgrounds */
+    background: linear-gradient(180deg, #0d47a1 0%, #08306a 100%);
+    border: 1px solid #062244;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 10px 20px;
+    box-shadow: 0 4px 10px rgba(13, 40, 86, 0.25);
+    text-shadow: none;
+}
+.nav-button.audit-button:hover {
+    background: linear-gradient(180deg, #08306a 0%, #062244 100%);
+    border-color: #041731;
+}
+
 /* Modal Styles */
 .modal {
     position: fixed;
