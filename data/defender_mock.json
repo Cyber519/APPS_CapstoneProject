@@ -55,5 +55,46 @@
         "Windows 10"
       ]
     }
+    ,
+    {
+      "id": "VULN-006",
+      "cve": "CVE-2025-00001",
+      "severity": "High",
+      "cvss": 8.0,
+      "description": "Service denial vulnerability in backup agent.",
+      "affected_products": ["Windows Server 2019", "Windows Server 2022"]
+    },
+    {
+      "id": "VULN-007",
+      "cve": "CVE-2025-00002",
+      "severity": "Medium",
+      "cvss": 5.0,
+      "description": "Information disclosure in telemetry pipeline.",
+      "affected_products": ["Windows 10", "Windows 11"]
+    },
+    {
+      "id": "VULN-008",
+      "cve": "CVE-2025-00003",
+      "severity": "Critical",
+      "cvss": 9.1,
+      "description": "Remote code execution via malformed update file.",
+      "affected_products": ["Windows 10", "Windows Server 2019"]
+    },
+    {
+      "id": "VULN-009",
+      "cve": "CVE-2025-00004",
+      "severity": "Low",
+      "cvss": 2.4,
+      "description": "Minor spoofing in UI components.",
+      "affected_products": ["Windows 11"]
+    },
+    {
+      "id": "VULN-010",
+      "cve": "CVE-2025-00005",
+      "severity": "High",
+      "cvss": 7.8,
+      "description": "Elevation of privilege in local service.",
+      "affected_products": ["Windows 10", "Windows 11", "Windows Server 2022"]
+    }
   ]
 }

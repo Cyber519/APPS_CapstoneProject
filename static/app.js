@@ -59,50 +59,60 @@ function runScoring() {
     });
 }
 
+// UI Color-coding notes:
+// - Priority CSS classes map to colors in `styles.css`.
+// - Score ranges: Critical (≥8) red, High (6-8) orange, Medium (4-6) yellow, Low (<4) green.
+// This mapping is produced server-side when computing `priority` and the UI applies
+// the corresponding CSS class (e.g. `priority critical`) so colors remain consistent.
+
 function deploy(button, scoreId) {
-    const row = button.closest('tr');
-    const statusCell = row.querySelector('.status');
-    const progressBar = row.querySelector('.progress-bar');
-    const progressFill = progressBar.querySelector('.progress-fill');
+    // Open approval modal instead of using prompt(); modal validates input.
+    document.getElementById('approveScoreId').value = scoreId;
+    document.getElementById('approverName').value = '';
+    document.getElementById('approveError').style.display = 'none';
+    document.getElementById('approveModal').style.display = 'block';
+}
 
-    button.disabled = true;
-    button.textContent = 'Deploying...';
-    statusCell.textContent = 'Deploying...';
-    progressBar.style.display = 'block';
+function closeApprove() {
+    document.getElementById('approveModal').style.display = 'none';
+}
 
-    let progress = 0;
-    const interval = setInterval(() => {
-        progress = Math.min(progress + 8, 95);
-        progressFill.style.width = `${progress}%`;
-    }, 100);
+function submitApproval() {
+    const scoreId = document.getElementById('approveScoreId').value;
+    const approver = document.getElementById('approverName').value.trim();
+    const errDiv = document.getElementById('approveError');
+    if (!approver) {
+        errDiv.textContent = 'Approver name is required';
+        errDiv.style.display = 'block';
+        return;
+    }
 
-    fetch(`/api/v1/deploy/${scoreId}`, {
-        method: 'POST'
+    errDiv.style.display = 'none';
+    // Record approval then call deploy endpoint
+    fetch(`/api/v1/deploy/${scoreId}/approve`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ approver })
     })
     .then(res => {
-        clearInterval(interval);
-        if (!res.ok) throw new Error('Deploy failed');
-        progressFill.style.width = '100%';
+        if (!res.ok) return res.json().then(j => { throw new Error(j.detail || 'Approval failed') });
         return res.json();
     })
     .then(() => {
-        statusCell.textContent = 'Completed';
-        row.classList.add('deployed-row');
-        button.textContent = 'Patched';
-        button.classList.add('deployed-button');
-        progressFill.style.width = '100%';
-        setTimeout(() => {
-            progressBar.style.display = 'none';
-        }, 500);
-        showToast('Deployment complete for ' + row.querySelector('td:nth-child(6)').textContent);
+        // Close modal
+        closeApprove();
+        // Now call deploy to complete
+        return fetch(`/api/v1/deploy/${scoreId}`, { method: 'POST' });
+    })
+    .then(res => {
+        if (!res.ok) return res.json().then(j => { throw new Error(j.detail || 'Deploy failed') });
+        // refresh the page to show updated status
+        showToast('Deployment completed');
+        setTimeout(() => window.location.reload(), 600);
     })
     .catch(err => {
-        console.error(err);
-        statusCell.textContent = 'Failed';
-        button.textContent = 'Retry';
-        button.disabled = false;
-        progressBar.style.display = 'none';
-        showToast('Deployment failed. Please try again.', true);
+        errDiv.textContent = err.message || 'Approval or deploy failed';
+        errDiv.style.display = 'block';
     });
 }
 
@@ -173,7 +183,7 @@ function showDetail(scoreId) {
                 return;
             }
             
-            // Format the modal content
+            // Format the modal content and show approver/timestamp when available
             modalBody.innerHTML = `
                 <div style="line-height: 1.8;">
                     <p><strong>Hostname:</strong> ${data.hostname}</p>
@@ -188,6 +198,8 @@ function showDetail(scoreId) {
                     <p><strong>Priority:</strong> <span class="priority ${data.priority.toLowerCase()}">${data.priority}</span></p>
                     <p><strong>Scoring Breakdown:</strong> ${data.score_reason}</p>
                     <p><strong>Status:</strong> ${data.action_status}</p>
+                    <p><strong>Approver:</strong> ${data.approver || 'N/A'}</p>
+                    <p><strong>Action Timestamp:</strong> ${data.timestamp || 'N/A'}</p>
                 </div>
             `;
         })

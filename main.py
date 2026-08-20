@@ -43,14 +43,14 @@ def dashboard(request: Request):
     cur.execute("""
         SELECT COUNT(*) AS c
         FROM Deployment_Actions
-        WHERE action_status = 'Completed'
+        WHERE LOWER(COALESCE(status, action_status)) = 'completed'
     """)
     deployed = cur.fetchone()["c"]
     cur.execute("""
         SELECT COUNT(*) AS c
         FROM Priority_Scores ps
         JOIN Deployment_Actions da ON ps.score_id = da.score_id
-        WHERE da.action_status = 'Completed'
+        WHERE LOWER(COALESCE(da.status, da.action_status)) = 'completed'
     """)
     remediated = cur.fetchone()["c"]
     cur.execute("""
@@ -60,7 +60,7 @@ def dashboard(request: Request):
             SELECT ps.dv_id
             FROM Priority_Scores ps
             JOIN Deployment_Actions da ON ps.score_id = da.score_id
-            WHERE da.action_status = 'Completed'
+            WHERE LOWER(COALESCE(da.status, da.action_status)) = 'completed'
         )
     """)
     active_vulns = cur.fetchone()["c"]
@@ -130,3 +130,10 @@ def priorities(request: Request):
     from services.scoring_service import get_priority_list
     priorities = get_priority_list()
     return templates.TemplateResponse("priorities.html", {"request": request, "priorities": priorities})
+
+
+@app.get("/deployments")
+def deployments(request: Request):
+    from services.scoring_service import get_deployment_actions
+    actions = get_deployment_actions()
+    return templates.TemplateResponse("deployments.html", {"request": request, "actions": actions})

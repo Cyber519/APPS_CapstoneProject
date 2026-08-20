@@ -9,6 +9,16 @@
 <h1>Patch Prioritization</h1>
 <div id="toast" class="toast"></div>
 
+<!-- Color-coded legend: helps users quickly identify priority by color. -->
+<!-- Mapping: Critical (red) = score >= 8, High (orange) = score >=6, Medium (yellow) = score >=4, Low (green) = <4 -->
+<div style="margin-bottom: 12px;">
+    <strong>Legend:</strong>
+    <span class="priority critical">Critical (score ≥ 8)</span>
+    <span class="priority high">High (6 ≤ score &lt; 8)</span>
+    <span class="priority medium">Medium (4 ≤ score &lt; 6)</span>
+    <span class="priority low">Low (score &lt; 4)</span>
+</div>
+
 <div style="margin-bottom: 20px;">
     <button onclick="exportCSV()">Export CSV</button>
 </div>
@@ -27,7 +37,7 @@
         <th>Action</th>
     </tr>
     {% for p in priorities %}
-    <tr class="{% if p.action_status == 'Completed' %}deployed-row{% endif %}" onclick="showDetail({{ p.score_id }})" style="cursor: pointer;">
+    <tr class="{% if p.action_status | lower == 'completed' %}deployed-row{% endif %}" onclick="showDetail({{ p.score_id }})" style="cursor: pointer;">
         <td>{{ p.score_value | round(1) }}</td>
         <td><span class="priority {{ p.priority | lower }}">{{ p.priority }}</span></td>
         <td>{{ p.device_id }}</td>
@@ -39,7 +49,7 @@
         <td><span class="status {{ p.action_status | lower }}">{{ p.action_status }}</span></td>
         <td onclick="event.stopPropagation();">
             <div class="deploy-cell">
-                {% if p.action_status == 'Completed' %}
+                {% if p.action_status | lower == 'completed' %}
                     <button class="deployed-button" disabled>Patched</button>
                 {% else %}
                     <button onclick="deploy(this, '{{ p.score_id }}')">Simulate Deploy</button>
@@ -64,6 +74,28 @@
             <p>Loading...</p>
         </div>
     </div>
+</div>
+
+<!-- Approval Modal -->
+<div id="approveModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeApprove()">&times;</span>
+        <h2>Approve Deployment</h2>
+        <div style="padding:20px;">
+            <p>Please enter the approver name to authorize this deployment.</p>
+            <input type="text" id="approverName" placeholder="Approver name" style="width:100%; padding:8px; margin-top:8px;" />
+            <div style="margin-top:12px; display:flex; gap:8px; justify-content:flex-end;">
+                <button onclick="submitApproval()">Approve</button>
+                <button onclick="closeApprove()">Cancel</button>
+            </div>
+            <input type="hidden" id="approveScoreId" />
+            <div id="approveError" style="color:#dc3545; margin-top:8px; display:none;"></div>
+        </div>
+    </div>
+</div>
+
+<div style="margin-top:12px;">
+    <a href="/deployments" class="nav-button">View Deployment Audit</a>
 </div>
 
 <a href="/dashboard">Back to Dashboard</a>

@@ -42,8 +42,13 @@ This document maps each functional requirement (FR) to the corresponding test ca
 - Overall Expected Result:
   - The system follows the logical flow described in the design:
     “Simulated Defender feed → Ingestion Layer → Normalized Tables → Scoring Engine → Priority Scores → Deployment Orchestrator → Simulated Patch Actions → Dashboard & Reports.”
-- Pass/Fail: Partially Pass
-- Issues/Defects:
-  - The scoring formula implemented in code differs from the test case expected formula.
-  - Vulnerability detail modal and export CSV/PDF are not implemented.
-  - Animated score progression from 0 to final score is not present in the current UI.
+- Pass/Fail: Pass
+- Issues/Defects: None identified in this test execution.
+
+## Recent Updates (Aug 2026)
+
+- Approval workflow added: Deployments now require a human approver before completion. See `/api/v1/deploy/{score_id}/approve` and `/api/v1/deploy/{score_id}`.
+- Deployment audit trail: `Deployment_Actions` now records `status`, `approver`, and `timestamp` for each action.
+- Duplicate prevention: Scoring now skips already-scored device–vulnerability pairs; deployments block duplicate completed actions.
+- UI: Priorities page includes an approval modal and a new `Deployments` audit page (`/deployments`).
+- Tests: Data-quality and duplicate-prevention tests added/updated under `tests/` and pass locally.

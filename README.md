@@ -2,6 +2,10 @@
 
 A full-stack web application for prioritizing patch deployments based on vulnerability severity, device criticality, and other factors.
 
+This repository includes recent enhancements: a documented end-to-end demo, a color-coded UI mapping, an approval workflow for deployments, duplicate-prevention safeguards, an audit trail for deployment actions, and data-quality tests.
+
+For full, up-to-date documentation including API reference, demo instructions, UI notes, and testing steps, see DOCUMENTATION.md in the repository root.
+
 ## Features
 
 - **Mock Data Integration**: Uses simulated data from Defender and KACE APIs

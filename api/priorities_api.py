@@ -1,7 +1,19 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
 from services.ingestion_service import ingest_all_data
-from services.scoring_service import calculate_priority_scores, get_priority_list, simulate_deployment, get_score_detail, export_priorities_csv
+from services.scoring_service import (
+    calculate_priority_scores,
+    get_priority_list,
+    simulate_deployment,
+    approve_deployment,
+    get_score_detail,
+    export_priorities_csv,
+)
+from pydantic import BaseModel
+
+
+class ApproveRequest(BaseModel):
+    approver: str
 
 router = APIRouter()
 
@@ -34,5 +46,22 @@ def export_csv():
 
 @router.post("/deploy/{score_id}")
 def deploy(score_id: int):
-    simulate_deployment(score_id)
-    return {"status": "Deployment simulated", "score_id": score_id}
+    try:
+        simulate_deployment(score_id)
+        return {"status": "Deployment simulated", "score_id": score_id}
+    except ValueError as e:
+        # Duplicate or other business logic error
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Deployment failed")
+
+
+@router.post("/deploy/{score_id}/approve")
+def approve(score_id: int, req: ApproveRequest):
+    try:
+        approve_deployment(score_id, req.approver)
+        return {"status": "Approved", "score_id": score_id, "approver": req.approver}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Approval failed")

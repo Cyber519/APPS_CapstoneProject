@@ -104,3 +104,9 @@ The assessment covers:
 
 ## 8. Conclusion
 The current workspace implements the functional core of the APPS system, but from a security perspective it is not production-ready. The highest risks are missing authentication/authorization, lack of CSRF protection, and exposed API endpoints. Addressing these will greatly improve the security posture.
+
+## Recent Changes (Aug 2026)
+
+- Approval audit trail: Deployments now require an approval action (`approver`, `timestamp`) stored in `Deployment_Actions`. This provides basic traceability for deployment decisions.
+- Reduced accidental-deploy risk: The new approval step reduces accidental or automated deployments but does not replace authentication/authorization.
+- Remaining risks: API endpoints remain unauthenticated and lack CSRF protection; add auth, CSRF tokens, secure headers, and input validation for production readiness.

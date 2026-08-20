@@ -644,3 +644,10 @@ DEBUG_MODE=False
 ---
 
 **End of Technical Design Document**
+
+## Recent Changes (Aug 2026)
+
+- `Deployment_Actions` schema extended to include `status`, `approver`, and `timestamp` to support an approval-audit workflow.
+- New endpoints: `POST /api/v1/deploy/{score_id}/approve` (record approver) and updated `POST /api/v1/deploy/{score_id}` (requires prior approval to complete).
+- Scoring safeguards added to prevent duplicate scoring of the same `dv_id`; deployment logic prevents duplicate completed deployments.
+- Added `scripts/demo_workflow.py` to demonstrate ingest → score → approve → deploy locally.

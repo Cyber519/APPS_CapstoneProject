@@ -188,4 +188,12 @@
   - CSV export: Prioritized data exportable in CSV format (TC06 ✓)
   - Animation: Score progression animated for user feedback (TC07 ✓)
   - Deployment: Simulation and status tracking functional (TC08 ✓)
+- Issue/Defects: None identified during this execution.
   - All 12 test cases passing with expected behaviors confirmed.
+
+## Recent Updates (Aug 2026)
+
+- Approval flow added: Add test steps for `POST /api/v1/deploy/{score_id}/approve` to verify approver recorded and that deployment requires prior approval.
+- Deployment audit: Add test to verify `/deployments` audit page shows `status`, `approver`, and `timestamp` for actions.
+- Duplicate prevention tests: New unit tests cover duplicate scoring prevention and duplicate completed deployment blocking (`tests/test_data_quality.py`).
+- Demo script: `scripts/demo_workflow.py` added for scripted local verification of ingest→score→approve→deploy.

@@ -918,3 +918,10 @@ For system to be considered **Ready for Production:**
 ---
 
 **End of Functional Test Documentation**
+
+## Recent Changes (Aug 2026)
+
+- Approval-first deployment flow: Deployments require an approval step via `POST /api/v1/deploy/{score_id}/approve` before completion.
+- Deployment audit page: `/deployments` lists `Deployment_Actions` including `status`, `approver`, and `timestamp`.
+- Duplicate safeguards: Scoring prevents duplicate `dv_id` re-scoring; deployments prevent duplicate completed actions.
+- Demo helper: `scripts/demo_workflow.py` available to run a local ingest→score→approve→deploy demo.

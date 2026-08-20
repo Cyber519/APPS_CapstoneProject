@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deployment Audit</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<h1>Deployment Audit Report</h1>
+<div style="margin-bottom:12px;"><a href="/priorities" class="nav-button">Back to Priorities</a></div>
+<table>
+    <tr>
+        <th>Action ID</th>
+        <th>Score ID</th>
+        <th>Status</th>
+        <th>Action Status</th>
+        <th>Approver</th>
+        <th>Timestamp</th>
+    </tr>
+    {% for a in actions %}
+    <tr>
+        <td>{{ a.action_id }}</td>
+        <td>{{ a.score_id }}</td>
+        <td>{{ a.status }}</td>
+        <td>{{ a.action_status }}</td>
+        <td>{{ a.approver or 'N/A' }}</td>
+        <td>{{ a.timestamp }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6">No deployment actions recorded.</td></tr>
+    {% endfor %}
+</table>
+</body>
+</html>

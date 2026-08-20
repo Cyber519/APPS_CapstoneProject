@@ -47,7 +47,11 @@ CREATE TABLE IF NOT EXISTS Priority_Scores (
 CREATE TABLE IF NOT EXISTS Deployment_Actions (
     action_id INTEGER PRIMARY KEY AUTOINCREMENT,
     score_id INTEGER NOT NULL,
+    -- New schema: support explicit `status` values and record who approved
+    -- `status` values: pending, approved, completed, failed
     action_status TEXT,
+    status TEXT,
+    approver TEXT,
     timestamp TEXT DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (score_id) REFERENCES Priority_Scores(score_id)
 );
