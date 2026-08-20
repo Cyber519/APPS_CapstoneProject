@@ -11,6 +11,11 @@
     <tr>
         <th>Action ID</th>
         <th>Score ID</th>
+        <th>Patch ID</th>
+        <th>Patch Title</th>
+        <th>Hostname</th>
+        <th>CVE</th>
+        <th>Vuln Severity</th>
         <th>Status</th>
         <th>Action Status</th>
         <th>Approver</th>
@@ -20,10 +25,21 @@
     <tr>
         <td>{{ a.action_id }}</td>
         <td>{{ a.score_id }}</td>
+        <td>{{ a.patch_id or 'N/A' }}</td>
+        <td>{{ a.patch_title or 'N/A' }}</td>
+        <td>{{ a.hostname or 'N/A' }}</td>
+        <td>
+            {% if a.cve_id %}
+                <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name={{ a.cve_id }}" target="_blank" rel="noopener noreferrer">{{ a.cve_id }}</a>
+            {% else %}
+                N/A
+            {% endif %}
+        </td>
+        <td>{{ a.vuln_severity or 'N/A' }}</td>
         <td>{{ a.status }}</td>
         <td>{{ a.action_status }}</td>
         <td>{{ a.approver or 'N/A' }}</td>
-        <td>{{ a.timestamp }}</td>
+        <td>{{ a.timestamp or 'N/A' }}</td>
     </tr>
     {% else %}
     <tr><td colspan="6">No deployment actions recorded.</td></tr>

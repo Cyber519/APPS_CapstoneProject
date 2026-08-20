@@ -282,10 +282,26 @@ def export_priorities_csv():
 def get_deployment_actions():
     conn = get_connection()
     cur = conn.cursor()
+    # Include related priority, device, vulnerability and patch info for richer audit rows
     cur.execute("""
-        SELECT action_id, score_id, COALESCE(status, action_status) as status, action_status, approver, timestamp
-        FROM Deployment_Actions
-        ORDER BY timestamp DESC
+        SELECT da.action_id,
+               da.score_id,
+               COALESCE(da.status, da.action_status) AS status,
+               da.action_status,
+               da.approver,
+               da.timestamp,
+               ps.patch_id,
+               p.title AS patch_title,
+               d.hostname,
+               v.cve_id,
+               v.severity AS vuln_severity
+        FROM Deployment_Actions da
+        LEFT JOIN Priority_Scores ps ON da.score_id = ps.score_id
+        LEFT JOIN Device_Vulnerabilities dv ON ps.dv_id = dv.dv_id
+        LEFT JOIN Devices d ON dv.device_id = d.device_id
+        LEFT JOIN Vulnerabilities v ON dv.vuln_id = v.vuln_id
+        LEFT JOIN Patches p ON ps.patch_id = p.patch_id
+        ORDER BY COALESCE(da.timestamp, '') DESC
     """)
     rows = cur.fetchall()
     conn.close()

@@ -16,7 +16,9 @@
     </tr>
     {% for v in vulnerabilities %}
     <tr>
-        <td>{{ v.cve_id }}</td>
+        <td>
+            <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name={{ v.cve_id }}" target="_blank" rel="noopener noreferrer">{{ v.cve_id }}</a>
+        </td>
         <td>{{ v.severity }}</td>
         <td>{{ v.cvss }}</td>
         <td>{{ v.device_count }}</td>

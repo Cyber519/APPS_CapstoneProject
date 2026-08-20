@@ -16,7 +16,13 @@
     </tr>
     {% for p in patches %}
     <tr>
-        <td>{{ p.patch_id }}</td>
+        <td>
+            {% if p.patch_id %}
+            <a href="https://support.microsoft.com/search?query={{ p.patch_id }}" target="_blank" rel="noopener noreferrer">{{ p.patch_id }}</a>
+            {% else %}
+            {{ p.patch_id }}
+            {% endif %}
+        </td>
         <td>{{ p.title }}</td>
         <td>{{ p.severity }}</td>
         <td>{{ p.reboot_required }}</td>

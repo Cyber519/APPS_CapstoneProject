@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-03-17T20:00:00Z",
+  "generated_at": "2026-07-15T12:00:00Z",
   "vulnerabilities": [
     {
       "id": "VULN-001",
-      "cve": "CVE-2024-12345",
+      "cve": "CVE-2026-14501",
       "severity": "Critical",
       "cvss": 9.8,
       "description": "Remote code execution vulnerability in core Windows networking components.",
@@ -14,7 +14,7 @@
     },
     {
       "id": "VULN-002",
-      "cve": "CVE-2024-54321",
+      "cve": "CVE-2026-14522",
       "severity": "High",
       "cvss": 7.5,
       "description": "Privilege escalation vulnerability allowing unauthorized access to system processes.",
@@ -25,7 +25,7 @@
     },
     {
       "id": "VULN-003",
-      "cve": "CVE-2023-98765",
+      "cve": "CVE-2026-14003",
       "severity": "Medium",
       "cvss": 5.4,
       "description": "Information disclosure vulnerability in Windows kernel memory handling.",
@@ -35,7 +35,7 @@
     },
     {
       "id": "VULN-004",
-      "cve": "CVE-2024-11111",
+      "cve": "CVE-2026-14211",
       "severity": "High",
       "cvss": 8.2,
       "description": "Buffer overflow in Windows Defender allowing arbitrary code execution.",
@@ -47,7 +47,7 @@
     },
     {
       "id": "VULN-005",
-      "cve": "CVE-2024-22222",
+      "cve": "CVE-2026-14333",
       "severity": "Low",
       "cvss": 3.1,
       "description": "Minor information leak in Windows Update service.",

@@ -42,9 +42,21 @@
         <td><span class="priority {{ p.priority | lower }}">{{ p.priority }}</span></td>
         <td>{{ p.device_id }}</td>
         <td>{{ p.vulnerability_id }}</td>
-        <td>{{ p.patch_id }}</td>
+        <td>
+            {% if p.patch_id %}
+            <a href="https://support.microsoft.com/search?query={{ p.patch_id }}" target="_blank" rel="noopener noreferrer">{{ p.patch_id }}</a>
+            {% else %}
+            None
+            {% endif %}
+        </td>
         <td>{{ p.hostname }}</td>
-        <td>{{ p.cve_id }}</td>
+        <td>
+            {% if p.cve_id %}
+            <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name={{ p.cve_id }}" target="_blank" rel="noopener noreferrer">{{ p.cve_id }}</a>
+            {% else %}
+            None
+            {% endif %}
+        </td>
         <td>{{ p.severity }}</td>
         <td><span class="status {{ p.action_status | lower }}">{{ p.action_status }}</span></td>
         <td onclick="event.stopPropagation();">

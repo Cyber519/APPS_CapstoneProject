@@ -29,7 +29,15 @@ def score():
 
 @router.get("/priorities")
 def priorities():
-    return get_priority_list()
+    # Enhance priority items with a canonical CVE link for UI/clients
+    items = get_priority_list()
+    enhanced = []
+    for it in items:
+        if isinstance(it, dict):
+            cve = it.get("cve_id")
+            it["cve_link"] = f"https://cve.mitre.org/cgi-bin/cvename.cgi?name={cve}" if cve else None
+        enhanced.append(it)
+    return enhanced
 
 @router.get("/priorities/{score_id}")
 def priority_detail(score_id: int):

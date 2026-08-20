@@ -1,45 +1,45 @@
 {
-  "generated_at": "2026-03-17T20:00:00Z",
+  "generated_at": "2026-07-15T12:00:00Z",
   "patches": [
     {
-      "patch_id": "KB5005565",
-      "title": "Security Update for Windows Server",
+      "patch_id": "KB5035012",
+      "title": "Security Update - Windows Server (July 2026)",
       "severity": "Critical",
       "reboot_required": true,
       "supersedes": [],
-      "cve_ids": ["CVE-2024-12345"]
+      "cve_ids": ["CVE-2026-14501"]
     },
     {
-      "patch_id": "KB5012170",
-      "title": "Cumulative Update for Windows",
+      "patch_id": "KB5035120",
+      "title": "Cumulative Update for Windows - July 2026",
       "severity": "High",
       "reboot_required": false,
-      "supersedes": ["KB5005565"],
-      "cve_ids": ["CVE-2024-54321"]
+      "supersedes": ["KB5035012"],
+      "cve_ids": ["CVE-2026-14522"]
     },
     {
-      "patch_id": "KB5006670",
-      "title": "Update for Windows Defender",
+      "patch_id": "KB5035231",
+      "title": "Windows Defender Update (July 2026)",
       "severity": "Medium",
       "reboot_required": true,
       "supersedes": [],
-      "cve_ids": ["CVE-2023-98765"]
+      "cve_ids": ["CVE-2026-14003"]
     },
     {
-      "patch_id": "KB5018410",
-      "title": "Security Update for Windows 11",
+      "patch_id": "KB5035345",
+      "title": "Security Update for Windows 11 (July 2026)",
       "severity": "High",
       "reboot_required": true,
       "supersedes": [],
-      "cve_ids": ["CVE-2024-11111"]
+      "cve_ids": ["CVE-2026-14211"]
     },
     {
-      "patch_id": "KB5021234",
-      "title": "Patch for Windows Server 2022",
+      "patch_id": "KB5035450",
+      "title": "Patch for Windows Server 2022 (July 2026)",
       "severity": "Critical",
       "reboot_required": true,
-      "supersedes": ["KB5018410"],
-      "cve_ids": ["CVE-2024-22222"]
+      "supersedes": ["KB5035345"],
+      "cve_ids": ["CVE-2026-14333"]
     }
   ]
 }
